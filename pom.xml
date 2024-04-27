@@ -164,6 +164,11 @@
         <artifactId>jqwik-api</artifactId>
         <version>${jqwik.version}</version>
       </dependency>
+      <dependency>
+        <groupId>nl.jqno.equalsverifier</groupId>
+        <artifactId>equalsverifier</artifactId>
+        <version>3.15.8</version>
+      </dependency>
 
       <!-- Logging -->
       <dependency>

@@ -197,13 +197,7 @@ public final class USQSQLiteCollection
     url.append("jdbc:sqlite:");
     url.append(file);
 
-    final var config = new SQLiteConfig();
-    config.setApplicationId(APPLICATION_ID);
-    config.enforceForeignKeys(true);
-    config.setJournalMode(SQLiteConfig.JournalMode.WAL);
-    config.setLockingMode(SQLiteConfig.LockingMode.NORMAL);
-    config.setSynchronous(SQLiteConfig.SynchronousMode.FULL);
-
+    final var config = sqliteConfiguration();
     final var dataSource = new SQLiteDataSource(config);
     dataSource.setUrl(url.toString());
     return new USQSQLiteCollection(dataSource);
@@ -221,13 +215,7 @@ public final class USQSQLiteCollection
     url.append("jdbc:sqlite:");
     url.append(file);
 
-    final var config = new SQLiteConfig();
-    config.setApplicationId(APPLICATION_ID);
-    config.enforceForeignKeys(true);
-    config.setJournalMode(SQLiteConfig.JournalMode.WAL);
-    config.setLockingMode(SQLiteConfig.LockingMode.NORMAL);
-    config.setSynchronous(SQLiteConfig.SynchronousMode.FULL);
-
+    final var config = sqliteConfiguration();
     final var dataSource = new SQLiteDataSource(config);
     dataSource.setUrl(url.toString());
 
@@ -254,6 +242,17 @@ public final class USQSQLiteCollection
       ).execute();
       connection.commit();
     }
+  }
+
+  private static SQLiteConfig sqliteConfiguration()
+  {
+    final var config = new SQLiteConfig();
+    config.setApplicationId(APPLICATION_ID);
+    config.enforceForeignKeys(true);
+    config.setJournalMode(SQLiteConfig.JournalMode.WAL);
+    config.setLockingMode(SQLiteConfig.LockingMode.NORMAL);
+    config.setSynchronous(SQLiteConfig.SynchronousMode.FULL);
+    return config;
   }
 
   private static void publishTrEvent(
