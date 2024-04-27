@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Schemas xmlns="urn:com.io7m.trasco.database.statements:1:0">
+  <Schema versionCurrent="0">
+    <Comment>
+      The schema version table stores the current version of the database schema. Implementations are expected to query
+      this table on connecting to the database in order to ensure that the calling code is compatible with the tables in
+      the database.
+    </Comment>
+
+    <Statement><![CDATA[
+CREATE TABLE schema_version (
+  version_lock            INTEGER NOT NULL DEFAULT 1,
+  version_application_id  TEXT    NOT NULL,
+  version_number          INTEGER NOT NULL,
+
+  CONSTRAINT check_lock_primary
+    PRIMARY KEY (version_lock),
+
+  CONSTRAINT check_lock_locked
+    CHECK (version_lock = 1)
+)
+-- [jooq ignore start]
+STRICT
+-- [jooq ignore stop]
+]]></Statement>
+  </Schema>
+
+  <Schema versionCurrent="1">
+    <Statement><![CDATA[
+CREATE TABLE messages (
+  msg_dbid            INTEGER PRIMARY KEY NOT NULL,
+  msg_id              TEXT                NOT NULL,
+  msg_created_on      TEXT                NOT NULL,
+  msg_expires_on      TEXT                NOT NULL,
+
+  msg_metadata_format TEXT                NOT NULL,
+  msg_metadata        BLOB                NOT NULL,
+  msg_data            BLOB                NOT NULL,
+
+  CONSTRAINT msg_id_unique
+    UNIQUE (msg_id COLLATE NOCASE)
+)
+-- [jooq ignore start]
+STRICT
+-- [jooq ignore stop]
+]]></Statement>
+
+    <Statement><![CDATA[
+CREATE TABLE queues (
+  q_dbid          INTEGER PRIMARY KEY NOT NULL,
+  q_name          TEXT                NOT NULL,
+
+  CONSTRAINT q_name_unique
+    UNIQUE (q_name COLLATE NOCASE)
+)
+-- [jooq ignore start]
+STRICT
+-- [jooq ignore stop]
+]]></Statement>
+
+    <Statement><![CDATA[
+CREATE TABLE queue_messages (
+  qm_order     INTEGER PRIMARY KEY NOT NULL,
+  qm_queue     INTEGER             NOT NULL,
+  qm_message   INTEGER             NOT NULL,
+
+  CONSTRAINT qm_queue_exists
+    FOREIGN KEY (qm_queue)
+      REFERENCES queues (q_dbid)
+        ON DELETE CASCADE,
+
+  CONSTRAINT qm_message_exists
+    FOREIGN KEY (qm_message)
+      REFERENCES messages (msg_dbid)
+        ON DELETE CASCADE,
+
+  CONSTRAINT qm_nodup
+    UNIQUE (qm_queue, qm_message)
+)
+-- [jooq ignore start]
+STRICT
+-- [jooq ignore stop]
+]]></Statement>
+  </Schema>
+
+</Schemas>
