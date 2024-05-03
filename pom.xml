@@ -48,9 +48,9 @@
   </licenses>
 
   <scm>
-    <url>https://www.github.com/io7m/usq</url>
-    <connection>scm:git:https://www.github.com/io7m/usq</connection>
-    <developerConnection>scm:git:https://www.github.com/io7m/usq</developerConnection>
+    <url>https://www.github.com/io7m-com/usq</url>
+    <connection>scm:git:https://www.github.com/io7m-com/usq</connection>
+    <developerConnection>scm:git:https://www.github.com/io7m-com/usq</developerConnection>
   </scm>
 
   <inceptionYear>2024</inceptionYear>
@@ -65,7 +65,7 @@
   </developers>
 
   <issueManagement>
-    <url>https://www.github.com/io7m/usq/issues</url>
+    <url>https://www.github.com/io7m-com/usq/issues</url>
     <system>GitHub Issues</system>
   </issueManagement>
 
@@ -83,7 +83,7 @@
 
   <ciManagement>
     <system>GitHub Actions</system>
-    <url>https://www.github.com/io7m/usq/actions</url>
+    <url>https://www.github.com/io7m-com/usq/actions</url>
   </ciManagement>
 
   <prerequisites>
